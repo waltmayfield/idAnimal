@@ -20,16 +20,19 @@
 
 <p id="demo"></p>
 
-<script>
+<!-- <script>
 function loadXMLDoc() {
   var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", "rss.xml", false);
   xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
+    if (this.readyState == 4 && (this.status == 200 || rawFile.status == 0)) {
       myFunction(this);
+      alert("ResponseText")
+      alert(this.responseText)
     }
   };
-  xmlhttp.open("GET", "rss.xml", true);
-  xmlhttp.send();
+  
+  xmlhttp.send(null);
   alert('Loaded XML')
 }
 
@@ -63,12 +66,64 @@ function myFunction(xml) {
 alert('Attempting to load RSS')
 
 loadXMLDoc()
+</script> -->
+
+<script type="text/javascript">
+  function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                alert(allText);
+                myFunction(rawFile)
+            }
+        }
+    }
+    rawFile.send(null);
+}
+
+
+function myFunction(xml) {
+  alert('Trying to parse XML')
+  var x, i, xmlDoc, txt;
+
+  alert(xml.responseXML)
+  
+  xmlDoc = xml.responseXML;
+  
+  txt = "";
+
+  authors = xmlDoc.getElementsByTagName("author");
+  titles = xmlDoc.getElementsByTagName("title");
+  imgsrcs = xmlDoc.getElementsByTagName("link");
+
+  alert('Authors: ' + authors.length)
+
+  for (i = 0; i< authors.length; i++) {
+    txt += titles[i].childNodes[0].nodeValue + "<br>";
+    txt += authors[i].childNodes[0].nodeValue + "<br>";
+    txt += '<img src="' + 
+      imgsrcs[i].childNodes[0].nodeValue +
+      '" alt="Trulli" width="500" height="333"><br>';
+  }
+  
+  document.getElementById("demo").innerHTML = txt;
+}
+
+readTextFile('rss.xml')
+
 </script>
 
 
 <p id="demo2"></p>
 
-<script>
+<!-- <script>
 var parser, xmlDoc;
 var text = "<bookstore>"+
 "<book>" +
@@ -105,29 +160,9 @@ alert(txt)
 
 document.getElementById("demo2").innerHTML =txt;
 
-</script>
+</script> -->
 
-<script type="text/javascript">
-  function readTextFile(file)
-{
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-                alert(allText);
-            }
-        }
-    }
-    rawFile.send(null);
-}
 
-alert(readTextFile('rss.xml'))
-</script>
 
 </body>
 </html>
