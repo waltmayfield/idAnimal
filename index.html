@@ -15,6 +15,9 @@
 
 <h2> Here's your animal feed </h2>
 
+<img src="images/unicorn-logo.png" alt="Trulli" width="500" height="333"><br>';
+<div><p><?php include('rss.xml'); ?></p></div>
+
 <p id="demo"></p>
 
 <script>
@@ -63,7 +66,68 @@ loadXMLDoc()
 </script>
 
 
+<p id="demo2"></p>
 
+<script>
+var parser, xmlDoc;
+var text = "<bookstore>"+
+"<book>" +
+"<title>Everyday Italian</title>" +
+"<author>Giada De Laurentiis</author>" +
+"<year>2005</year>" +
+"<imgsrc>pic_trulli.jpg</imgsrc>" +
+"</book>" +
+"<book>" +
+"<title>Gravy</title>" +
+"<author>Chx</author>" +
+"<year>2030</year>" +
+"<imgsrc>images/unicorn-logo.png</imgsrc>" +
+"</book>" +
+"</bookstore>";
+
+parser = new DOMParser();
+xmlDoc = parser.parseFromString(text,"text/xml");
+
+titles = xmlDoc.getElementsByTagName("title");
+authors = xmlDoc.getElementsByTagName("author");
+
+txt = ""
+
+for (i = 0; i< titles.length; i++) {
+    txt += titles[i].childNodes[0].nodeValue + "<br>";
+    txt += '<img src="' + 
+      xmlDoc.getElementsByTagName("imgsrc")[i].childNodes[0].nodeValue +
+      '" alt="Trulli" width="500" height="333"><br>';
+    
+  }
+
+alert(txt)
+
+document.getElementById("demo2").innerHTML =txt;
+
+</script>
+
+<script type="text/javascript">
+  function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                alert(allText);
+            }
+        }
+    }
+    rawFile.send(null);
+}
+
+alert(readTextFile('rss.xml'))
+</script>
 
 </body>
 </html>
