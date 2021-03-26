@@ -1,19 +1,7 @@
-<!doctype html>
-<html class="no-js" lang="">
-<head>
-  <meta charset="utf-8">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Let's ID some animals!</title>
-
-  <link rel="stylesheet" href="css/font.css">
-  <link rel="stylesheet" href="css/main.css">
-
-  <script src="js/vendor/modernizr.js"></script>
-</head>
-<body class="page-home">
-
-<h2> Here's your animal feed </h2>
+<!DOCTYPE html>
+<html>
+<body>
+<h2>My CD Collection:</h2>
 
 <p id="demo"></p>
 
@@ -27,22 +15,12 @@ function loadXMLDoc() {
   };
   xmlhttp.open("GET", "rss.xml", true);
   xmlhttp.send();
-  alert('Loaded XML')
 }
 
 function myFunction(xml) {
-  alert('Trying to parse XML')
   var x, i, xmlDoc, txt;
-
-  alert(xml.responseXML)
-  
   xmlDoc = xml.responseXML;
-
-
-
   txt = "";
-
-  alert('Authors: ' + authors.length)
 
   authors = xmlDoc.getElementsByTagName("author");
   titles = xmlDoc.getElementsByTagName("title");
@@ -59,13 +37,8 @@ function myFunction(xml) {
   document.getElementById("demo").innerHTML = txt;
 }
 
-alert('Attempting to load RSS')
-
 loadXMLDoc()
 </script>
-
-
-
 
 </body>
 </html>
