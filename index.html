@@ -104,12 +104,12 @@ function myFunction(xml) {
   titles = xmlDoc.getElementsByTagName("title");
   imgsrcs = xmlDoc.getElementsByTagName("link");
 
-  alert('Authors: ' + authors.length)
+  alert('Images: ' + imgsrcs.length)
 
-  for (i = 0; i< authors.length; i++) {
+  for (i = 1; i < imgsrcs.length; i++) {
     alert("Creating Post For ")
     txt += titles[i].childNodes[0].nodeValue + "<br>";
-    txt += authors[i].childNodes[0].nodeValue + "<br>";
+    txt += authors[i-1].childNodes[0].nodeValue + "<br>";
     txt += '<img src="' + 
       imgsrcs[i].childNodes[0].nodeValue +
       '" alt="Trulli" width="500" height="333"><br><br>';
