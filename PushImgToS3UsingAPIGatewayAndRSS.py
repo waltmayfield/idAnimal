@@ -15,17 +15,25 @@ url = 'https://gv1yedhm7b.execute-api.us-west-2.amazonaws.com/prod/UploadToS3'
 
 myobj = json.dumps({
 	'name': fileName,
-	'taxonomy': {'species': 'Flamingo'},
+	'taxonomy': {'species': 'Rinorosaurus'},
 	'file': encoded_string.decode(ENCODING)
 	},
 	indent = 2)
 
 x = requests.post(url, data = myobj)
 
+print(f'Upload to S3 Response: {x.text}')
 
 
+# Now call the API to create the RSS feed
+url = 'https://gv1yedhm7b.execute-api.us-west-2.amazonaws.com/prod/makerssfeed'
 
+myobj = json.dumps({
+	'name': 'APICallToMakeRSSFeed'
+	},
+	indent = 2)
 
-print(x.text)
+x = requests.post(url, data = myobj)
 
+print(f'Create RSS Feed Response: {x.text}')
 ### data:image/jpeg;base64,
