@@ -103,6 +103,8 @@ function myFunction(xml) {
   authors = xmlDoc.getElementsByTagName("author");
   titles = xmlDoc.getElementsByTagName("title");
   imgsrcs = xmlDoc.getElementsByTagName("link");
+  desc = xmlDoc.getElementsByTagName("description");
+  dttms = xmlDoc.getElementsByTagName("pubDate");
 
   alert('Images: ' + imgsrcs.length)
 
@@ -110,6 +112,8 @@ function myFunction(xml) {
     alert("Creating Post For ")
     txt += titles[i].childNodes[0].nodeValue + "<br>";
     txt += authors[i-1].childNodes[0].nodeValue + "<br>";
+    txt += desc[i].childNodes[0].nodeValue + "<br>";
+    txt += dttms[i].childNodes[0].nodeValue + "<br>";
     txt += '<img src="' + 
       imgsrcs[i].childNodes[0].nodeValue +
       '" alt="Trulli" width="500" height="333"><br><br>';
@@ -123,49 +127,6 @@ function myFunction(xml) {
 readTextFile('rss.xml')
 
 </script>
-
-
-<p id="demo2"></p>
-
-<!-- <script>
-var parser, xmlDoc;
-var text = "<bookstore>"+
-"<book>" +
-"<title>Everyday Italian</title>" +
-"<author>Giada De Laurentiis</author>" +
-"<year>2005</year>" +
-"<imgsrc>pic_trulli.jpg</imgsrc>" +
-"</book>" +
-"<book>" +
-"<title>Gravy</title>" +
-"<author>Chx</author>" +
-"<year>2030</year>" +
-"<imgsrc>images/unicorn-logo.png</imgsrc>" +
-"</book>" +
-"</bookstore>";
-
-parser = new DOMParser();
-xmlDoc = parser.parseFromString(text,"text/xml");
-
-titles = xmlDoc.getElementsByTagName("title");
-authors = xmlDoc.getElementsByTagName("author");
-
-txt = ""
-
-for (i = 0; i< titles.length; i++) {
-    txt += titles[i].childNodes[0].nodeValue + "<br>";
-    txt += '<img src="' + 
-      xmlDoc.getElementsByTagName("imgsrc")[i].childNodes[0].nodeValue +
-      '" alt="Trulli" width="500" height="333"><br>';
-    
-  }
-
-alert(txt)
-
-document.getElementById("demo2").innerHTML =txt;
-
-</script> -->
-
 
 
 </body>
