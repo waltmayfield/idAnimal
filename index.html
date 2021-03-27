@@ -6,67 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Let's ID some animals!</title>
 
-  <!-- <link rel="stylesheet" href="css/font.css">
-  <link rel="stylesheet" href="css/main.css">
-
-  <script src="js/vendor/modernizr.js"></script> -->
 </head>
 <body class="page-home">
 
 <h2> Here's your animal feed </h2>
 
-<!-- <img src="images/unicorn-logo.png" alt="Trulli" width="500" height="333"><br>';
-<div><p><?php include('rss.xml'); ?></p></div> -->
-
 <p id="demo"></p>
-
-<!-- <script>
-function loadXMLDoc() {
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", "rss.xml", false);
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && (this.status == 200 || rawFile.status == 0)) {
-      myFunction(this);
-      alert("ResponseText")
-      alert(this.responseText)
-    }
-  };
-  
-  xmlhttp.send(null);
-  alert('Loaded XML')
-}
-
-function myFunction(xml) {
-  alert('Trying to parse XML')
-  var x, i, xmlDoc, txt;
-
-  alert(xml.responseXML)
-  
-  xmlDoc = xml.responseXML;
-  
-  txt = "";
-
-  alert('Authors: ' + authors.length)
-
-  authors = xmlDoc.getElementsByTagName("author");
-  titles = xmlDoc.getElementsByTagName("title");
-  imgsrcs = xmlDoc.getElementsByTagName("link");
-
-  for (i = 0; i< authors.length; i++) {
-    txt += titles[i].childNodes[0].nodeValue + "<br>";
-    txt += authors[i].childNodes[0].nodeValue + "<br>";
-    txt += '<img src="' + 
-      imgsrcs[i].childNodes[0].nodeValue +
-      '" alt="Trulli" width="500" height="333"><br>';
-  }
-  
-  document.getElementById("demo").innerHTML = txt;
-}
-
-alert('Attempting to load RSS')
-
-loadXMLDoc()
-</script> -->
 
 <script type="text/javascript">
   function readTextFile(file)
@@ -90,7 +35,6 @@ loadXMLDoc()
 }
 
 function myFunction(xml) {
-  alert('Trying to parse XML')
 
   var x, i, xmlDoc, txt;
 
@@ -110,7 +54,6 @@ function myFunction(xml) {
   alert('Images: ' + imgsrcs.length)
 
   for (i = 1; i < imgsrcs.length; i++) {
-    alert("Creating Post For ")
     txt += titles[i].childNodes[0].nodeValue + "<br>";
     txt += authors[i-1].childNodes[0].nodeValue + "<br>";
     txt += desc[i].childNodes[0].nodeValue + "<br>";
@@ -124,8 +67,6 @@ function myFunction(xml) {
 
   document.getElementById("demo").innerHTML = txt;
 }
-
-alert('starting read xml process')
 
 readTextFile('oth/rss.xml')
 

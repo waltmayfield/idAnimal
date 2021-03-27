@@ -23,9 +23,6 @@ myobj = json.dumps({
 x = requests.post(url, data = myobj)
 
 
-
-
-
 print(x.text)
 
 ### data:image/jpeg;base64,
