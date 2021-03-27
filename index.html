@@ -15,8 +15,8 @@
 
 <h2> Here's your animal feed </h2>
 
-<img src="images/unicorn-logo.png" alt="Trulli" width="500" height="333"><br>';
-<div><p><?php include('rss.xml'); ?></p></div>
+<!-- <img src="images/unicorn-logo.png" alt="Trulli" width="500" height="333"><br>';
+<div><p><?php include('rss.xml'); ?></p></div> -->
 
 <p id="demo"></p>
 
@@ -88,14 +88,15 @@ loadXMLDoc()
     rawFile.send(null);
 }
 
-
 function myFunction(xml) {
   alert('Trying to parse XML')
+
   var x, i, xmlDoc, txt;
 
-  alert(xml.responseXML)
-  
-  xmlDoc = xml.responseXML;
+  var parser = new DOMParser();
+  var xmlDoc = parser.parseFromString(xml.responseText, 'text/xml');
+
+  var posts = '';
   
   txt = "";
 
@@ -106,13 +107,16 @@ function myFunction(xml) {
   alert('Authors: ' + authors.length)
 
   for (i = 0; i< authors.length; i++) {
+    alert("Creating Post For ")
     txt += titles[i].childNodes[0].nodeValue + "<br>";
     txt += authors[i].childNodes[0].nodeValue + "<br>";
     txt += '<img src="' + 
       imgsrcs[i].childNodes[0].nodeValue +
-      '" alt="Trulli" width="500" height="333"><br>';
+      '" alt="Trulli" width="500" height="333"><br><br>';
   }
   
+  alert("Response text: " + txt)
+
   document.getElementById("demo").innerHTML = txt;
 }
 
