@@ -1,8 +1,3 @@
-numPredictionsHonored = 10
-LastXTracker = [("dummy",0)]*numPredictionsHonored
+import time
 
-print(len(LastXTracker))
-
-LastXTracker = [('Freddy', 0.99)] + LastXTracker[0:-1]
-
-print(len(LastXTracker))
+print(hash(time.time()))

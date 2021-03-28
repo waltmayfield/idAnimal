@@ -5,6 +5,7 @@ import numpy as np
 import time
 from tflite_runtime.interpreter import Interpreter
 
+from FunctionsS3RSS import *
 
 
 def load_labels(path): # Read the labels from the text file as a Python list.
@@ -51,7 +52,7 @@ cv2.namedWindow("test")
 
 img_counter = 0
 
-numPredictionsHonored = 10
+numPredictionsHonored = 3
 LastXTracker = [("dummy",0)]*numPredictionsHonored
 
 lastTime = time.time()
@@ -76,9 +77,17 @@ while True:
 	labelsAllSame = LastXLabels.count(LastXLabels[0])==len(LastXLabels)
 	if labelsAllSame:
 		LastXprobs = [x[1] for x in LastXTracker]
-		if min(LastXprobs) > 0.8:
+		if min(LastXprobs) > 0.5:
 			print(f"Image Classified as {classification_label}")
-	
+			
+			imgPath = '/home/pi/Documents/idAnimal/temp.jpg'
+			cv2.imwrite(imgPath,image)
+			
+			UploadToS3AndDDB(imgPath,{"species":classification_label},prob,'MobileNetV1')
+			
+			createRSSFeed()
+			
+			break
 	cv2.imshow("test", frame)
 	
 	k = cv2.waitKey(1)
