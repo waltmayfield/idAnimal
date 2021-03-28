@@ -30,12 +30,15 @@ def classify_image(interpreter, image, top_k=1):
   ordered = np.argpartition(-output, 1)
   return [(i, output[i]) for i in ordered[:top_k]][0]
 
+#/home/pi/tflite_models/inception_v4_299_quant_20181026/
+data_folder = '/home/pi/tflite_models/inception_v4_299_quant_20181026/'
+model_path = data_folder + "inception_v4_299_quant.tflite"
+#label_path = data_folder + "labels_mobilenet_quant_v1_224.txt"
 
-data_folder = '/home/pi/TFLite_MobileNet/mobilenet_v1_1.0_224_quant_and_labels/'
-
-model_name = 'MobileNetV1'
-model_path = data_folder + "mobilenet_v1_1.0_224_quant.tflite"
+data_folder = '/home/pi/tflite_models/mobilenet_v1_1.0_224_quant_and_labels/'
+#model_path = data_folder + "mobilenet_v1_1.0_224_quant.tflite"
 label_path = data_folder + "labels_mobilenet_quant_v1_224.txt"
+
 
 interpreter = Interpreter(model_path)
 print("Model Loaded Successfully.")
@@ -78,16 +81,18 @@ while True:
 	labelsAllSame = LastXLabels.count(LastXLabels[0])==len(LastXLabels)
 	if labelsAllSame:
 		LastXprobs = [x[1] for x in LastXTracker]
-		if min(LastXprobs) > 0.5:
+		if min(LastXprobs) > 0.8:
 			print(f"Image Classified as {classification_label}")
 			
 			imgPath = '/home/pi/Documents/idAnimal/temp.jpg'
 			cv2.imwrite(imgPath,frame)
 			
-			UploadToS3AndDDB('testuser',imgPath,{"source": model_name, "score": str(prob), "species":classification_label},prob,'MobileNetV1')
+			UploadToS3AndDDB('testuser',imgPath,{"source": model_path, "score": str(prob), "species":classification_label},prob,'MobileNetV1')
 			
 			createRSSFeed()
 			
+			#Reset the tracker
+			LastXTracker = [("dummy",0)]*numPredictionsHonored
 			print('Wait 60 seconds after uploading image')
 			time.sleep(60)
 			
