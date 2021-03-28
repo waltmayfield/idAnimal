@@ -11,14 +11,14 @@ ENCODING = 'utf-8'
 
 # print(len(encoded_string))
 
-def UploadToS3AndDDB(filePath, taxonomy, score, source):
+def UploadToS3AndDDB(userName, filePath, taxonomy, score, source):
 	url = 'https://gv1yedhm7b.execute-api.us-west-2.amazonaws.com/prod/UploadToS3'
 
 	with open(filePath, "rb") as image_file:
 		encoded_string = base64.b64encode(image_file.read())
 	
 	myobj = json.dumps({
-		'name': filePath,
+		'name': userName + str(hash(time.time())),
 		'taxonomy': taxonomy,
 		'file': encoded_string.decode(ENCODING)
 		},

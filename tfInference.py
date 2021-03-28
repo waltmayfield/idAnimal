@@ -33,6 +33,7 @@ def classify_image(interpreter, image, top_k=1):
 
 data_folder = '/home/pi/TFLite_MobileNet/mobilenet_v1_1.0_224_quant_and_labels/'
 
+model_name = 'MobileNetV1'
 model_path = data_folder + "mobilenet_v1_1.0_224_quant.tflite"
 label_path = data_folder + "labels_mobilenet_quant_v1_224.txt"
 
@@ -52,7 +53,7 @@ cv2.namedWindow("test")
 
 img_counter = 0
 
-numPredictionsHonored = 3
+numPredictionsHonored = 2
 LastXTracker = [("dummy",0)]*numPredictionsHonored
 
 lastTime = time.time()
@@ -81,13 +82,15 @@ while True:
 			print(f"Image Classified as {classification_label}")
 			
 			imgPath = '/home/pi/Documents/idAnimal/temp.jpg'
-			cv2.imwrite(imgPath,image)
+			cv2.imwrite(imgPath,frame)
 			
-			UploadToS3AndDDB(imgPath,{"species":classification_label},prob,'MobileNetV1')
+			UploadToS3AndDDB('testuser',imgPath,{"source": model_name, "score": str(prob), "species":classification_label},prob,'MobileNetV1')
 			
 			createRSSFeed()
 			
-			break
+			print('Wait 60 seconds after uploading image')
+			time.sleep(60)
+			
 	cv2.imshow("test", frame)
 	
 	k = cv2.waitKey(1)
