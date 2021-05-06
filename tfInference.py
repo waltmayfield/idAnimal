@@ -81,7 +81,7 @@ while True:
 	labelsAllSame = LastXLabels.count(LastXLabels[0])==len(LastXLabels)
 	if labelsAllSame:
 		LastXprobs = [x[1] for x in LastXTracker]
-		if min(LastXprobs) > 0.80 and classification_label = 'hummingbird':
+		if min(LastXprobs) > 0.80 and classification_label == 'hummingbird':
 			print(f"Image Classified as {classification_label}")
 			
 			imgPath = '/home/pi/Documents/idAnimal/temp.jpg'
