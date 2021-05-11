@@ -60,8 +60,15 @@ numPredictionsHonored = 1
 LastXTracker = [("dummy",0)]*numPredictionsHonored
 
 lastTime = time.time()
+lastFrame = None
+mseMotion = None
+
 while True:
 	ret, frame = cam.read()
+	
+	if lastFrame:
+		mseMotion = np.square(np.subtract(frame, lastFrame)).mean()
+	
 	if not ret:
 		print("failed to grab frame")
 		break
@@ -81,13 +88,13 @@ while True:
 	labelsAllSame = LastXLabels.count(LastXLabels[0])==len(LastXLabels)
 	if labelsAllSame:
 		LastXprobs = [x[1] for x in LastXTracker]
-		if min(LastXprobs) > 0.80 and classification_label == 'hummingbird':
+		if min(LastXprobs) > 0.96 and classification_label == 'hummingbird':
 			print(f"Image Classified as {classification_label}")
 			
 			imgPath = '/home/pi/Documents/idAnimal/temp.jpg'
 			cv2.imwrite(imgPath,frame)
 			
-			UploadToS3AndDDB('testuser',imgPath,{"source": model_path, "score": str(prob), "species":classification_label},prob,'MobileNetV1')
+			UploadToS3AndDDB('testuser',imgPath,{"source": model_path, "score": str(prob), "species":classification_label},prob,mseMotion,'MobileNetV1')
 			
 			createRSSFeed()
 			
