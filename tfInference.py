@@ -52,7 +52,7 @@ labels = load_labels(label_path)
 
 cam = cv2.VideoCapture(0)
 
-cv2.namedWindow("test")
+#cv2.namedWindow("test")
 
 img_counter = 0
 
@@ -94,7 +94,7 @@ while True:
 			imgPath = '/home/pi/Documents/idAnimal/temp.jpg'
 			cv2.imwrite(imgPath,frame)
 			
-			UploadToS3AndDDB('testuser',imgPath,{"source": model_path, "score": str(prob), "species":classification_label},prob,mseMotion,'MobileNetV1')
+			UploadToS3AndDDB('testuser',imgPath,{"source": model_path, "score": str(prob), "species":classification_label},prob,'MobileNetV1')
 			
 			createRSSFeed()
 			
