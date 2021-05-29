@@ -103,7 +103,7 @@ while True:
 			print('Wait 10 seconds after uploading image')
 			time.sleep(10)
 			
-	cv2.imshow("test", frame)
+	#cv2.imshow("test", frame)
 	
 	k = cv2.waitKey(1)
 	if k%256 == 27:
