@@ -66,8 +66,9 @@ mseMotion = None
 while True:
 	ret, frame = cam.read()
 	
-	if lastFrame:
+	if lastFrame is not None:
 		mseMotion = np.square(np.subtract(frame, lastFrame)).mean()
+	lastFrame = frame
 	
 	if not ret:
 		print("failed to grab frame")
@@ -79,7 +80,7 @@ while True:
 	#Classify Image
 	label_id, prob = classify_image(interpreter, image)
 	classification_label = labels[label_id]
-	print(f"Image Label is :{classification_label}, with Accuracy :{np.round(prob*100, 2)}%.")
+	print(f"Image Label is :{classification_label}, with Accuracy :{np.round(prob*100, 2)}%, Motion mse: {mseMotion}.")
 	
 	LastXTracker = [(classification_label, prob)] + LastXTracker[0:-1]
 	
@@ -100,8 +101,8 @@ while True:
 			
 			#Reset the tracker
 			LastXTracker = [("dummy",0)]*numPredictionsHonored
-			print('Wait 10 seconds after uploading image')
-			time.sleep(10)
+			print('Wait 20 seconds after uploading image')
+			time.sleep(20)
 			
 	#cv2.imshow("test", frame)
 	
